@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pine Grove Schedule</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 30px;
+      font-family: Arial, sans-serif;
+      background: #f3f1eb;
+      color: #26322b;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      color: #68736b;
+    }
+
+    .day-control {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .day-control label {
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    select {
+      font-size: 16px;
+      padding: 8px 34px 8px 12px;
+      border: 1px solid #b8beb9;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-size: 21px;
+    }
+
+    .schedule {
+      display: grid;
+      grid-template-columns: 125px repeat(3, 1fr);
+      border: 1px solid #c9cec9;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .corner,
+    .class-header {
+      padding: 12px;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: 1px solid #b9c0ba;
+    }
+
+    .corner {
+      background: #edf0ec;
+    }
+
+    .spruce-header {
+      background: #dcebdc;
+    }
+
+    .birch-header {
+      background: #dce7ef;
+    }
+
+    .maple-header {
+      background: #f1e2cf;
+    }
+
+    .activity {
+      padding: 14px 10px;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-top: 1px solid #c9cec9;
+      background: #f4f3ef;
+    }
+
+    .activity:first-child {
+      border-top: none;
+    }
+
+    .activity-time {
+      font-size: 12px;
+      font-weight: normal;
+      margin-top: 4px;
+      color: #697169;
+    }
+
+    .room {
+      position: relative;
+      min-height: 70px;
+      border-left: 1px solid #c9cec9;
+      border-top: 1px solid #c9cec9;
+      background: white;
+    }
+
+    .staff-block {
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      padding: 7px 8px;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 1.25;
+      overflow: hidden;
+    }
+
+    .spruce-block {
+      background: #e8f3e8;
+      border-left: 4px solid #789879;
+    }
+
+    .birch-block {
+      background: #e8f0f5;
+      border-left: 4px solid #7893a6;
+    }
+
+    .maple-block {
+      background: #f6ebdc;
+      border-left: 4px solid #b58c5d;
+    }
+
+    .block-time {
+      display: block;
+      font-size: 11px;
+      color: #68716a;
+      margin-bottom: 3px;
+    }
+
+    .status {
+      text-align: center;
+      padding: 40px;
+      color: #6d746e;
+    }
+
+    .error {
+      color: #9b3838;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .card {
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .day-control {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <header>
+    <div>
+      <h1>Daily Staff Schedule</h1>
+      <div class="subtitle">Pine Grove Montessori School</div>
+    </div>
+
+    <div class="day-control">
+      <label for="day">Day</label>
+      <select id="day">
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option selected>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="card">
+    <h2 class="section-title">Primary</h2>
+
+    <div id="content">
+      <div class="status">Loading schedule…</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+const CSV_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vS4807ECz35YOfslHd7b3Lya0mIG7qqbzDzfpMuV2JCwMkL_bkVujxZ5DWdj_YLMDoT6BHYWU97giNn/pub?gid=1831595603&single=true&output=csv";
+
+const rooms = ["Spruce", "Birch", "Maple"];
+
+const activities = [
+  {
+    name: "Work Cycle",
+    start: "8:15 AM",
+    end: "11:15 AM"
+  },
+  {
+    name: "Morning Recess",
+    start: "11:15 AM",
+    end: "12:15 PM"
+  },
+  {
+    name: "Lunch",
+    start: "12:15 PM",
+    end: "1:00 PM"
+  },
+  {
+    name: "Rest",
+    start: "1:00 PM",
+    end: "2:30 PM"
+  },
+  {
+    name: "Afternoon Recess",
+    start: "2:30 PM",
+    end: "3:30 PM"
+  }
+];
+
+let scheduleData = [];
+
+function parseCSV(text) {
+
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let quoted = false;
+
+  for (let i = 0; i < text.length; i++) {
+
+    const char = text[i];
+
+    if (char === '"') {
+
+      if (quoted && text[i + 1] === '"') {
+        cell += '"';
+        i++;
+      } else {
+        quoted = !quoted;
+      }
+
+    } else if (char === "," && !quoted) {
+
+      row.push(cell);
+      cell = "";
+
+    } else if (
+      (char === "\n" || char === "\r") &&
+      !quoted
+    ) {
+
+      if (char === "\r" && text[i + 1] === "\n") {
+        i++;
+      }
+
+      row.push(cell);
+
+      if (row.some(value => value !== "")) {
+        rows.push(row);
+      }
+
+      row = [];
+      cell = "";
+
+    } else {
+
+      cell += char;
+
+    }
+  }
+
+  if (cell || row.length) {
+    row.push(cell);
+    rows.push(row);
+  }
+
+  const headers = rows.shift().map(h => h.trim());
+
+  return rows.map(values => {
+
+    const object = {};
+
+    headers.forEach((header, index) => {
+      object[header] = (values[index] || "").trim();
+    });
+
+    return object;
+
+  });
+}
+
+function timeToMinutes(value) {
+
+  if (!value) return null;
+
+  const match = value.match(
+    /(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i
+  );
+
+  if (!match) return null;
+
+  let hour = Number(match[1]);
+  const minute = Number(match[2]);
+  const period = match[3];
+
+  if (period) {
+
+    if (period.toUpperCase() === "PM" && hour !== 12) {
+      hour += 12;
+    }
+
+    if (period.toUpperCase() === "AM" && hour === 12) {
+      hour = 0;
+    }
+
+  }
+
+  return hour * 60 + minute;
+}
+
+function formatTime(value) {
+
+  const minutes = timeToMinutes(value);
+
+  if (minutes === null) return value;
+
+  let hour = Math.floor(minutes / 60);
+  const minute = minutes % 60;
+
+  const period = hour >= 12 ? "PM" : "AM";
+
+  hour = hour % 12;
+
+  if (hour === 0) hour = 12;
+
+  return hour + ":" +
+    String(minute).padStart(2, "0") +
+    " " + period;
+}
+
+function worksOnDay(row, day) {
+
+  const value = String(row[day] || "").toLowerCase();
+
+  return (
+    value === "true" ||
+    value === "yes" ||
+    value === "1"
+  );
+}
+
+function getRoomRows(room, day, start, end) {
+
+  return scheduleData
+    .filter(row => {
+
+      if (row.Assignment !== room) return false;
+      if (!worksOnDay(row, day)) return false;
+
+      const rowStart = timeToMinutes(row.Start);
+      const rowEnd = timeToMinutes(row.End);
+
+      return (
+        rowStart !== null &&
+        rowEnd !== null &&
+        rowStart < end &&
+        rowEnd > start
+      );
+
+    })
+    .sort(
+      (a, b) =>
+        timeToMinutes(a.Start) -
+        timeToMinutes(b.Start)
+    );
+}
+
+function makeStaffSegments(room, day, start, end) {
+
+  const rows = getRoomRows(room, day, start, end);
+
+  if (!rows.length) return [];
+
+  const points = new Set([start, end]);
+
+  rows.forEach(row => {
+
+    points.add(
+      Math.max(start, timeToMinutes(row.Start))
+    );
+
+    points.add(
+      Math.min(end, timeToMinutes(row.End))
+    );
+
+  });
+
+  const times = [...points].sort((a, b) => a - b);
+
+  const segments = [];
+
+  for (let i = 0; i < times.length - 1; i++) {
+
+    const segmentStart = times[i];
+    const segmentEnd = times[i + 1];
+
+    const staff = rows
+      .filter(row => {
+
+        const rowStart = timeToMinutes(row.Start);
+        const rowEnd = timeToMinutes(row.End);
+
+        return (
+          rowStart <= segmentStart &&
+          rowEnd > segmentStart
+        );
+
+      })
+      .map(row => row.Staff);
+
+    const uniqueStaff = [...new Set(staff)];
+
+    if (!uniqueStaff.length) continue;
+
+    const last = segments[segments.length - 1];
+
+    const staffKey = uniqueStaff
+      .slice()
+      .sort()
+      .join("|");
+
+    if (
+      last &&
+      last.staffKey === staffKey &&
+      last.end === segmentStart
+    ) {
+
+      last.end = segmentEnd;
+
+    } else {
+
+      segments.push({
+        start: segmentStart,
+        end: segmentEnd,
+        staff: uniqueStaff,
+        staffKey
+      });
+
+    }
+  }
+
+  return segments;
+}
+
+function minutesToLabel(minutes) {
+
+  let hour = Math.floor(minutes / 60);
+  const minute = minutes % 60;
+
+  const period = hour >= 12 ? "PM" : "AM";
+
+  hour %= 12;
+
+  if (hour === 0) hour = 12;
+
+  return (
+    hour +
+    ":" +
+    String(minute).padStart(2, "0") +
+    " " +
+    period
+  );
+}
+
+function renderRoom(room, day, activityStart, activityEnd) {
+
+  const roomElement = document.createElement("div");
+
+  roomElement.className = "room";
+
+  const duration = activityEnd - activityStart;
+
+  roomElement.style.minHeight =
+    Math.max(70, duration * 0.62) + "px";
+
+  const segments =
+    makeStaffSegments(
+      room,
+      day,
+      activityStart,
+      activityEnd
+    );
+
+  segments.forEach(segment => {
+
+    const block = document.createElement("div");
+
+    const roomClass = room.toLowerCase();
+
+    block.className =
+      "staff-block " + roomClass + "-block";
+
+    const top =
+      ((segment.start - activityStart) / duration) * 100;
+
+    const height =
+      ((segment.end - segment.start) / duration) * 100;
+
+    block.style.top = "calc(" + top + "% + 4px)";
+    block.style.height =
+      "calc(" + height + "% - 8px)";
+
+    block.innerHTML =
+      '<span class="block-time">' +
+      minutesToLabel(segment.start) +
+      "–" +
+      minutesToLabel(segment.end) +
+      "</span>" +
+      segment.staff.join(", ");
+
+    roomElement.appendChild(block);
+
+  });
+
+  return roomElement;
+}
+
+function render() {
+
+  const day =
+    document.getElementById("day").value;
+
+  const content =
+    document.getElementById("content");
+
+  content.innerHTML = "";
+
+  const schedule =
+    document.createElement("div");
+
+  schedule.className = "schedule";
+
+  const corner =
+    document.createElement("div");
+
+  corner.className = "corner";
+  corner.textContent = "Activity";
+
+  schedule.appendChild(corner);
+
+  rooms.forEach(room => {
+
+    const header =
+      document.createElement("div");
+
+    header.className =
+      "class-header " +
+      room.toLowerCase() +
+      "-header";
+
+    header.textContent = room;
+
+    schedule.appendChild(header);
+
+  });
+
+  activities.forEach(activity => {
+
+    const start =
+      timeToMinutes(activity.start);
+
+    const end =
+      timeToMinutes(activity.end);
+
+    const activityCell =
+      document.createElement("div");
+
+    activityCell.className = "activity";
+
+    activityCell.innerHTML =
+      "<span>" + activity.name + "</span>" +
+      '<span class="activity-time">' +
+      activity.start +
+      "–" +
+      activity.end +
+      "</span>";
+
+    activityCell.style.minHeight =
+      Math.max(70, (end - start) * 0.62) + "px";
+
+    schedule.appendChild(activityCell);
+
+    rooms.forEach(room => {
+
+      schedule.appendChild(
+        renderRoom(
+          room,
+          day,
+          start,
+          end
+        )
+      );
+
+    });
+
+  });
+
+  content.appendChild(schedule);
+}
+
+async function loadSchedule() {
+
+  try {
+
+    const response =
+      await fetch(CSV_URL);
+
+    if (!response.ok) {
+      throw new Error("Could not load schedule.");
+    }
+
+    const text =
+      await response.text();
+
+    scheduleData =
+      parseCSV(text);
+
+    render();
+
+  } catch (error) {
+
+    document.getElementById("content").innerHTML =
+      '<div class="status error">' +
+      "The schedule could not be loaded." +
+      "</div>";
+
+    console.error(error);
+  }
+}
+
+document
+  .getElementById("day")
+  .addEventListener("change", render);
+
+loadSchedule();
+
+</script>
+
+</body>
+</html>
