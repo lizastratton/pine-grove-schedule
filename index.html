@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Pine Grove Daily Schedule</title>
 
 <style>
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
 
 :root {
   --text:#27312a;
@@ -33,6 +37,10 @@
   --other-dark:#9a8b56;
 }
 
+/* =========================================================
+   PAGE
+========================================================= */
+
 body {
   margin:0;
   padding:20px;
@@ -45,6 +53,10 @@ body {
   max-width:1500px;
   margin:auto;
 }
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 header {
   display:flex;
@@ -84,6 +96,10 @@ select {
   font-size:14px;
 }
 
+/* =========================================================
+   GENERAL CARDS
+========================================================= */
+
 .card {
   background:white;
   border-radius:12px;
@@ -98,7 +114,7 @@ select {
 }
 
 /* =========================================================
-   COMPACT CARE SECTIONS
+   EARLY / AFTER CARE
 ========================================================= */
 
 .care-grid {
@@ -118,6 +134,7 @@ select {
   border:1px solid var(--line);
   border-radius:8px;
   overflow:hidden;
+  background:#fff;
 }
 
 .care-title {
@@ -131,18 +148,31 @@ select {
 
 .care-content {
   padding:8px;
-  min-height:43px;
+  min-height:48px;
   text-align:center;
   font-size:13px;
+
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
 }
 
 .care-person {
-  display:inline-block;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
   margin:2px;
-  padding:5px 7px;
+  padding:5px 8px;
+
   background:#f3eff7;
   border-left:3px solid var(--care-dark);
   border-radius:5px;
+
+  text-align:center;
 }
 
 .care-time {
@@ -152,13 +182,47 @@ select {
   color:var(--muted);
 }
 
+/* Gathering box */
+
+.gathering-box {
+  margin-top:8px;
+  padding:8px;
+
+  border:1px dashed #bcb3c8;
+  border-radius:6px;
+
+  background:#faf8fc;
+
+  text-align:center;
+}
+
+.gathering-label {
+  display:block;
+
+  margin-bottom:5px;
+
+  font-size:10px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+
+  color:var(--care-dark);
+}
+
+.gathering-people {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:4px;
+}
+
 /* =========================================================
-   MAIN PRIMARY + SEEDLINGS
+   PRIMARY + SEEDLINGS
 ========================================================= */
 
 .school-grid {
   display:grid;
-  grid-template-columns:minmax(0, 2fr) minmax(300px, .9fr);
+  grid-template-columns:minmax(0,2fr) minmax(300px,.9fr);
   gap:12px;
 }
 
@@ -175,12 +239,13 @@ select {
 }
 
 /* =========================================================
-   TIMELINE TABLES
+   TIMELINE
 ========================================================= */
 
 .timeline-layout {
   display:grid;
   grid-template-rows:38px auto;
+
   border:1px solid var(--line);
   border-radius:9px;
   overflow:hidden;
@@ -198,9 +263,14 @@ select {
   display:flex;
   justify-content:center;
   align-items:center;
+
   padding:5px;
+
   font-size:13px;
   font-weight:bold;
+
+  text-align:center;
+
   border-bottom:1px solid var(--line);
 }
 
@@ -212,16 +282,31 @@ select {
   border-left:1px solid var(--line);
 }
 
-.spruce-header { background:var(--spruce); }
-.birch-header { background:var(--birch); }
-.maple-header { background:var(--maple); }
-.seedlings-header { background:var(--seedlings); }
+.spruce-header {
+  background:var(--spruce);
+}
 
-/* 8:15–3:30 */
+.birch-header {
+  background:var(--birch);
+}
+
+.maple-header {
+  background:var(--maple);
+}
+
+.seedlings-header {
+  background:var(--seedlings);
+}
+
+/*
+8:15 AM – 3:45 PM
+450 minutes total
+*/
+
 .activity-track,
 .room-track {
   position:relative;
-  height:500px;
+  height:515px;
 }
 
 .room-track {
@@ -229,7 +314,7 @@ select {
 }
 
 /* =========================================================
-   ACTIVITIES
+   ACTIVITY BLOCKS
 ========================================================= */
 
 .activity-block {
@@ -242,6 +327,9 @@ select {
   display:flex;
   flex-direction:column;
   justify-content:center;
+  align-items:center;
+
+  text-align:center;
 
   background:#f7f6f2;
 
@@ -257,22 +345,28 @@ select {
 .activity-name {
   font-weight:bold;
   font-size:12px;
-  line-height:1.05;
+  line-height:1.1;
 }
 
 .activity-time {
   margin-top:4px;
+
   color:var(--muted);
+
   font-size:9px;
-  line-height:1.05;
+  line-height:1.1;
 }
 
 .activity-line {
   position:absolute;
+
   left:0;
   right:0;
+
   height:1px;
+
   background:#d3d7d3;
+
   z-index:1;
 }
 
@@ -282,6 +376,7 @@ select {
 
 .staff-block {
   position:absolute;
+
   z-index:2;
 
   padding:5px 3px;
@@ -293,24 +388,44 @@ select {
   overflow:hidden;
 
   font-size:11px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
 }
 
 .staff-name {
   display:block;
+
+  width:100%;
+
   font-weight:bold;
-  line-height:1.05;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  line-height:1.1;
+
+  text-align:center;
+
+  white-space:normal;
+  overflow-wrap:anywhere;
 }
 
 .staff-time {
   display:block;
+
+  width:100%;
+
   margin-top:3px;
+
   font-size:8px;
+  line-height:1.1;
+
   color:#5f675f;
-  line-height:1;
-  white-space:nowrap;
+
+  text-align:center;
+
+  white-space:normal;
 }
 
 .spruce-block {
@@ -339,23 +454,31 @@ select {
 
 .duties-table {
   display:grid;
-  grid-template-columns:110px 170px 1fr;
+
+  grid-template-columns:120px 180px 1fr;
+
   border:1px solid var(--line);
   border-radius:8px;
+
   overflow:hidden;
 }
 
 .duty-header {
   padding:6px 8px;
+
   background:var(--other);
+
   font-size:11px;
   font-weight:bold;
+
   border-bottom:1px solid var(--line);
 }
 
 .duty-cell {
   padding:7px 8px;
+
   font-size:12px;
+
   border-top:1px solid #e1e3e1;
 }
 
@@ -365,9 +488,13 @@ select {
 
 .empty-message {
   grid-column:1 / -1;
+
   padding:10px;
+
   text-align:center;
+
   color:var(--muted);
+
   font-size:12px;
 }
 
@@ -377,10 +504,12 @@ select {
   color:var(--muted);
 }
 
-.error { color:#9b3838; }
+.error {
+  color:#9b3838;
+}
 
 /* =========================================================
-   SMALL SCREENS
+   RESPONSIVE
 ========================================================= */
 
 @media (max-width:950px) {
@@ -391,6 +520,24 @@ select {
 
   .after-grid {
     grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media (max-width:600px) {
+
+  body {
+    padding:8px;
+  }
+
+  header {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .early-grid,
+  .after-grid {
+    grid-template-columns:1fr;
   }
 
 }
@@ -420,128 +567,260 @@ select {
   }
 
 }
+
 </style>
 </head>
+
 
 <body>
 
 <div class="page">
 
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
 <header>
 
   <div>
+
     <h1>Daily Staff Schedule</h1>
-    <div class="subtitle">Pine Grove Montessori School</div>
+
+    <div class="subtitle">
+      Pine Grove Montessori School
+    </div>
+
   </div>
 
+
   <div class="day-control">
-    <label for="day">Day</label>
+
+    <label for="day">
+      Day
+    </label>
 
     <select id="day">
+
       <option>Monday</option>
       <option>Tuesday</option>
-      <option selected>Wednesday</option>
+      <option>Wednesday</option>
       <option>Thursday</option>
       <option>Friday</option>
+
     </select>
+
   </div>
 
 </header>
 
 
-<!-- EARLY CARE -->
+<!-- ======================================================
+     EARLY CARE
+====================================================== -->
 
 <section class="card">
 
-  <h2 class="section-title">Early Care</h2>
+  <h2 class="section-title">
+    Early Care
+  </h2>
+
 
   <div class="care-grid early-grid">
 
-    <div class="care-box">
-      <div class="care-title">Primary Early Care</div>
-      <div class="care-content" id="primary-early"></div>
-    </div>
 
     <div class="care-box">
-      <div class="care-title">Seedlings Early Care</div>
-      <div class="care-content" id="seedlings-early"></div>
+
+      <div class="care-title">
+        Primary Early Care
+      </div>
+
+      <div
+        class="care-content"
+        id="primary-early">
+      </div>
+
     </div>
+
+
+    <div class="care-box">
+
+      <div class="care-title">
+        Seedlings Early Care
+      </div>
+
+      <div
+        class="care-content"
+        id="seedlings-early">
+      </div>
+
+    </div>
+
 
   </div>
 
 </section>
 
 
-<!-- MAIN SCHOOL DAY -->
+<!-- ======================================================
+     SCHOOL DAY
+====================================================== -->
 
 <div class="school-grid">
 
+
+  <!-- PRIMARY -->
+
   <section class="schedule-card">
 
-    <h2 class="schedule-title">Primary</h2>
+    <h2 class="schedule-title">
+      Primary
+    </h2>
 
     <div id="primary-content">
-      <div class="status">Loading…</div>
+
+      <div class="status">
+        Loading…
+      </div>
+
     </div>
 
   </section>
 
+
+  <!-- SEEDLINGS -->
 
   <section class="schedule-card">
 
-    <h2 class="schedule-title">Seedlings</h2>
+    <h2 class="schedule-title">
+      Seedlings
+    </h2>
 
     <div id="seedlings-content">
-      <div class="status">Loading…</div>
+
+      <div class="status">
+        Loading…
+      </div>
+
     </div>
 
   </section>
+
 
 </div>
 
 
-<!-- OTHER DUTIES -->
+<!-- ======================================================
+     OTHER DUTIES
+====================================================== -->
 
 <section class="card">
 
-  <h2 class="section-title">Other Duties</h2>
+  <h2 class="section-title">
+    Other Duties
+  </h2>
 
   <div id="duties-content"></div>
 
 </section>
 
 
-<!-- AFTER CARE -->
+<!-- ======================================================
+     AFTER CARE
+====================================================== -->
 
 <section class="card">
 
-  <h2 class="section-title">After Care</h2>
+  <h2 class="section-title">
+    After Care
+  </h2>
+
 
   <div class="care-grid after-grid">
 
-    <div class="care-box">
-      <div class="care-title">Primary • 4:30</div>
-      <div class="care-content" id="primary-430"></div>
-    </div>
+
+    <!-- PRIMARY 4:30 -->
 
     <div class="care-box">
-      <div class="care-title">Primary • 5:30</div>
-      <div class="care-content" id="primary-530"></div>
+
+      <div class="care-title">
+        Primary • 4:30
+      </div>
+
+
+      <div
+        class="care-content"
+        id="primary-430">
+      </div>
+
+
+      <div class="gathering-box">
+
+        <span class="gathering-label">
+          Gather 4:30 After Care
+        </span>
+
+        <div
+          class="gathering-people"
+          id="primary-430-gather">
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="care-box">
-      <div class="care-title">Seedlings • 4:30</div>
-      <div class="care-content" id="seedlings-430"></div>
-    </div>
+
+    <!-- PRIMARY 5:30 -->
 
     <div class="care-box">
-      <div class="care-title">Seedlings • 5:30</div>
-      <div class="care-content" id="seedlings-530"></div>
+
+      <div class="care-title">
+        Primary • 5:30
+      </div>
+
+      <div
+        class="care-content"
+        id="primary-530">
+      </div>
+
     </div>
+
+
+    <!-- SEEDLINGS 4:30 -->
+
+    <div class="care-box">
+
+      <div class="care-title">
+        Seedlings • 4:30
+      </div>
+
+      <div
+        class="care-content"
+        id="seedlings-430">
+      </div>
+
+    </div>
+
+
+    <!-- SEEDLINGS 5:30 -->
+
+    <div class="care-box">
+
+      <div class="care-title">
+        Seedlings • 5:30
+      </div>
+
+      <div
+        class="care-content"
+        id="seedlings-530">
+      </div>
+
+    </div>
+
 
   </div>
 
 </section>
+
 
 </div>
 
@@ -549,17 +828,32 @@ select {
 <script>
 
 /* =========================================================
-   DATA SOURCE
+   GOOGLE SHEET
 ========================================================= */
 
 const CSV_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4807ECz35YOfslHd7b3Lya0mIG7qqbzDzfpMuV2JCwMkL_bkVujxZ5DWdj_YLMDoT6BHYWU97giNn/pub?gid=1831595603&single=true&output=csv";
 
 
-const DAY_START = 8 * 60 + 15;
-const DAY_END = 15 * 60 + 30;
-const DAY_LENGTH = DAY_END - DAY_START;
+/* =========================================================
+   SCHOOL DAY
 
+   8:15 AM – 3:45 PM
+========================================================= */
+
+const DAY_START =
+  8 * 60 + 15;
+
+const DAY_END =
+  15 * 60 + 45;
+
+const DAY_LENGTH =
+  DAY_END - DAY_START;
+
+
+/* =========================================================
+   PRIMARY ACTIVITIES
+========================================================= */
 
 const primaryActivities = [
 
@@ -590,11 +884,15 @@ const primaryActivities = [
   {
     name:"Afternoon Recess",
     start:14 * 60 + 30,
-    end:15 * 60 + 30
+    end:15 * 60 + 45
   }
 
 ];
 
+
+/* =========================================================
+   SEEDLINGS ACTIVITIES
+========================================================= */
 
 const seedlingsActivities = [
 
@@ -625,7 +923,7 @@ const seedlingsActivities = [
   {
     name:"Afternoon Recess",
     start:14 * 60 + 30,
-    end:15 * 60 + 30
+    end:15 * 60 + 45
   }
 
 ];
@@ -635,7 +933,7 @@ let scheduleData = [];
 
 
 /* =========================================================
-   CSV
+   CSV PARSER
 ========================================================= */
 
 function parseCSV(text) {
@@ -654,12 +952,17 @@ function parseCSV(text) {
 
     if (char === '"') {
 
-      if (quoted && text[i + 1] === '"') {
+      if (
+        quoted &&
+        text[i + 1] === '"'
+      ) {
 
         cell += '"';
         i++;
 
-      } else {
+      }
+
+      else {
 
         quoted = !quoted;
 
@@ -667,15 +970,22 @@ function parseCSV(text) {
 
     }
 
-    else if (char === "," && !quoted) {
+
+    else if (
+      char === "," &&
+      !quoted
+    ) {
 
       row.push(cell);
+
       cell = "";
 
     }
 
+
     else if (
-      (char === "\n" || char === "\r") &&
+      (char === "\n" ||
+       char === "\r") &&
       !quoted
     ) {
 
@@ -683,19 +993,31 @@ function parseCSV(text) {
         char === "\r" &&
         text[i + 1] === "\n"
       ) {
+
         i++;
+
       }
+
 
       row.push(cell);
 
-      if (row.some(value => value !== "")) {
+
+      if (
+        row.some(
+          value => value !== ""
+        )
+      ) {
+
         rows.push(row);
+
       }
+
 
       row = [];
       cell = "";
 
     }
+
 
     else {
 
@@ -706,30 +1028,42 @@ function parseCSV(text) {
   }
 
 
-  if (cell || row.length) {
+  if (
+    cell ||
+    row.length
+  ) {
 
     row.push(cell);
+
     rows.push(row);
 
   }
 
 
   const headers =
-    rows.shift().map(
-      header => header.trim()
-    );
+    rows
+      .shift()
+      .map(
+        header =>
+          header.trim()
+      );
 
 
   return rows.map(values => {
 
     const object = {};
 
-    headers.forEach((header,index) => {
 
-      object[header] =
-        (values[index] || "").trim();
+    headers.forEach(
+      (header,index) => {
 
-    });
+        object[header] =
+          (values[index] || "")
+            .trim();
+
+      }
+    );
+
 
     return object;
 
@@ -739,12 +1073,14 @@ function parseCSV(text) {
 
 
 /* =========================================================
-   TIME
+   TIME FUNCTIONS
 ========================================================= */
 
 function timeToMinutes(value) {
 
-  if (!value) return null;
+  if (!value) {
+    return null;
+  }
 
 
   const match =
@@ -753,12 +1089,19 @@ function timeToMinutes(value) {
     );
 
 
-  if (!match) return null;
+  if (!match) {
+    return null;
+  }
 
 
-  let hour = Number(match[1]);
-  const minute = Number(match[2]);
-  const period = match[3];
+  let hour =
+    Number(match[1]);
+
+  const minute =
+    Number(match[2]);
+
+  const period =
+    match[3];
 
 
   if (period) {
@@ -767,20 +1110,28 @@ function timeToMinutes(value) {
       period.toUpperCase() === "PM" &&
       hour !== 12
     ) {
+
       hour += 12;
+
     }
+
 
     if (
       period.toUpperCase() === "AM" &&
       hour === 12
     ) {
+
       hour = 0;
+
     }
 
   }
 
 
-  return hour * 60 + minute;
+  return (
+    hour * 60 +
+    minute
+  );
 
 }
 
@@ -788,16 +1139,22 @@ function timeToMinutes(value) {
 function minutesToLabel(minutes) {
 
   let hour =
-    Math.floor(minutes / 60);
+    Math.floor(
+      minutes / 60
+    );
 
   const minute =
     minutes % 60;
 
+
   const period =
-    hour >= 12 ? "PM" : "AM";
+    hour >= 12
+      ? "PM"
+      : "AM";
 
 
   hour %= 12;
+
 
   if (hour === 0) {
     hour = 12;
@@ -807,7 +1164,8 @@ function minutesToLabel(minutes) {
   return (
     hour +
     ":" +
-    String(minute).padStart(2,"0") +
+    String(minute)
+      .padStart(2,"0") +
     " " +
     period
   );
@@ -816,14 +1174,16 @@ function minutesToLabel(minutes) {
 
 
 /* =========================================================
-   DAY
+   DAY MATCHING
 ========================================================= */
 
 function worksOnDay(row,day) {
 
   const value =
-    String(row[day] || "")
-      .toLowerCase();
+    String(
+      row[day] || ""
+    )
+    .toLowerCase();
 
 
   return (
@@ -836,37 +1196,56 @@ function worksOnDay(row,day) {
 
 
 /* =========================================================
-   ASSIGNMENTS
+   GET ASSIGNMENTS
 ========================================================= */
 
-function getAssignments(assignment,day) {
+function getAssignments(
+  assignment,
+  day
+) {
 
   return scheduleData
 
     .filter(row => {
 
       return (
-        row.Assignment === assignment &&
-        worksOnDay(row,day)
+
+        row.Assignment ===
+          assignment &&
+
+        worksOnDay(
+          row,
+          day
+        )
+
       );
 
     })
 
     .map(row => ({
 
-      staff:row.Staff,
+      staff:
+        row.Staff,
 
-      start:timeToMinutes(row.Start),
+      start:
+        timeToMinutes(
+          row.Start
+        ),
 
-      end:timeToMinutes(row.End)
+      end:
+        timeToMinutes(
+          row.End
+        )
 
     }))
 
     .filter(item => {
 
       return (
+
         item.start !== null &&
         item.end !== null
+
       );
 
     });
@@ -875,7 +1254,7 @@ function getAssignments(assignment,day) {
 
 
 /* =========================================================
-   MERGE SAME PERSON'S CONTINUOUS TIME
+   MERGE CONTINUOUS ASSIGNMENTS
 ========================================================= */
 
 function mergeContinuous(items) {
@@ -886,10 +1265,14 @@ function mergeContinuous(items) {
   items.forEach(item => {
 
     if (!groups[item.staff]) {
+
       groups[item.staff] = [];
+
     }
 
-    groups[item.staff].push(item);
+
+    groups[item.staff]
+      .push(item);
 
   });
 
@@ -897,69 +1280,93 @@ function mergeContinuous(items) {
   const result = [];
 
 
-  Object.keys(groups).forEach(staff => {
-
-    const staffItems =
-      groups[staff]
-        .sort((a,b) => a.start - b.start);
+  Object
+    .keys(groups)
+    .forEach(staff => {
 
 
-    let current = null;
-
-
-    staffItems.forEach(item => {
-
-      if (!current) {
-
-        current = {
-          staff,
-          start:item.start,
-          end:item.end
-        };
-
-      }
-
-      else if (item.start <= current.end) {
-
-        current.end =
-          Math.max(
-            current.end,
-            item.end
+      const staffItems =
+        groups[staff]
+          .sort(
+            (a,b) =>
+              a.start - b.start
           );
 
-      }
 
-      else {
+      let current = null;
 
-        result.push(current);
 
-        current = {
-          staff,
-          start:item.start,
-          end:item.end
-        };
+      staffItems.forEach(item => {
+
+
+        if (!current) {
+
+          current = {
+
+            staff:staff,
+            start:item.start,
+            end:item.end
+
+          };
+
+        }
+
+
+        else if (
+          item.start <=
+          current.end
+        ) {
+
+          current.end =
+            Math.max(
+              current.end,
+              item.end
+            );
+
+        }
+
+
+        else {
+
+          result.push(
+            current
+          );
+
+
+          current = {
+
+            staff:staff,
+            start:item.start,
+            end:item.end
+
+          };
+
+        }
+
+      });
+
+
+      if (current) {
+
+        result.push(
+          current
+        );
 
       }
 
     });
 
 
-    if (current) {
-      result.push(current);
-    }
-
-  });
-
-
   return result.sort(
-    (a,b) => a.start - b.start
+    (a,b) =>
+      a.start - b.start
   );
 
 }
 
 
 /* =========================================================
-   LANES
+   SIDE-BY-SIDE STAFF LANES
 ========================================================= */
 
 function assignLanes(items) {
@@ -978,9 +1385,13 @@ function assignLanes(items) {
       i++
     ) {
 
-      if (laneEnds[i] <= item.start) {
+      if (
+        laneEnds[i] <=
+        item.start
+      ) {
 
         lane = i;
+
         break;
 
       }
@@ -993,9 +1404,12 @@ function assignLanes(items) {
       lane =
         laneEnds.length;
 
-      laneEnds.push(item.end);
+      laneEnds.push(
+        item.end
+      );
 
     }
+
 
     else {
 
@@ -1005,78 +1419,116 @@ function assignLanes(items) {
     }
 
 
-    item.lane = lane;
+    item.lane =
+      lane;
 
   });
 
 
   return {
-    items,
+
+    items:items,
+
     laneCount:
       Math.max(
         laneEnds.length,
         1
       )
+
   };
 
 }
 
 
 /* =========================================================
-   ACTIVITY TRACK
+   ACTIVITY COLUMN
 ========================================================= */
 
-function makeActivityTrack(activities) {
+function makeActivityTrack(
+  activities
+) {
 
   const track =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   track.className =
     "activity-track";
 
 
-  activities.forEach(activity => {
-
-    const block =
-      document.createElement("div");
-
-    block.className =
-      "activity-block";
+  activities.forEach(
+    activity => {
 
 
-    const top =
-      ((activity.start - DAY_START) /
-        DAY_LENGTH) * 100;
+      const block =
+        document.createElement(
+          "div"
+        );
 
 
-    const height =
-      ((activity.end - activity.start) /
-        DAY_LENGTH) * 100;
+      block.className =
+        "activity-block";
 
 
-    block.style.top =
-      top + "%";
+      const top =
+        (
+          (activity.start -
+           DAY_START) /
 
-    block.style.height =
-      height + "%";
+          DAY_LENGTH
 
-
-    block.innerHTML =
-
-      '<span class="activity-name">' +
-      activity.name +
-      "</span>" +
-
-      '<span class="activity-time">' +
-      minutesToLabel(activity.start) +
-      "–" +
-      minutesToLabel(activity.end) +
-      "</span>";
+        ) * 100;
 
 
-    track.appendChild(block);
+      const height =
+        (
+          (activity.end -
+           activity.start) /
 
-  });
+          DAY_LENGTH
+
+        ) * 100;
+
+
+      block.style.top =
+        top + "%";
+
+
+      block.style.height =
+        height + "%";
+
+
+      block.innerHTML =
+
+        '<span class="activity-name">' +
+
+        activity.name +
+
+        "</span>" +
+
+        '<span class="activity-time">' +
+
+        minutesToLabel(
+          activity.start
+        ) +
+
+        "–" +
+
+        minutesToLabel(
+          activity.end
+        ) +
+
+        "</span>";
+
+
+      track.appendChild(
+        block
+      );
+
+    }
+  );
 
 
   return track;
@@ -1085,7 +1537,7 @@ function makeActivityTrack(activities) {
 
 
 /* =========================================================
-   ROOM TRACK
+   CLASSROOM TIMELINE
 ========================================================= */
 
 function makeRoomTrack(
@@ -1096,39 +1548,58 @@ function makeRoomTrack(
 ) {
 
   const track =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   track.className =
     "room-track";
 
 
-  /* Activity lines */
+  /* Activity divider lines */
 
-  activities.forEach((activity,index) => {
-
-    if (index === 0) return;
-
-
-    const line =
-      document.createElement("div");
-
-    line.className =
-      "activity-line";
+  activities.forEach(
+    (activity,index) => {
 
 
-    line.style.top =
-
-      (
-        (activity.start - DAY_START) /
-        DAY_LENGTH *
-        100
-      ) + "%";
+      if (index === 0) {
+        return;
+      }
 
 
-    track.appendChild(line);
+      const line =
+        document.createElement(
+          "div"
+        );
 
-  });
 
+      line.className =
+        "activity-line";
+
+
+      line.style.top =
+
+        (
+          (activity.start -
+           DAY_START) /
+
+          DAY_LENGTH *
+
+          100
+
+        ) + "%";
+
+
+      track.appendChild(
+        line
+      );
+
+    }
+  );
+
+
+  /* Staff assignments */
 
   let assignments =
     getAssignments(
@@ -1138,115 +1609,167 @@ function makeRoomTrack(
 
 
   assignments =
-    assignments.filter(item => {
+    assignments.filter(
+      item => {
 
-      return (
-        item.start < DAY_END &&
-        item.end > DAY_START
-      );
+        return (
 
-    });
+          item.start <
+            DAY_END &&
 
+          item.end >
+            DAY_START
 
-  assignments =
-    assignments.map(item => ({
+        );
 
-      ...item,
-
-      start:
-        Math.max(
-          item.start,
-          DAY_START
-        ),
-
-      end:
-        Math.min(
-          item.end,
-          DAY_END
-        )
-
-    }));
+      }
+    );
 
 
   assignments =
-    mergeContinuous(assignments);
+    assignments.map(
+      item => ({
+
+        ...item,
+
+        start:
+          Math.max(
+            item.start,
+            DAY_START
+          ),
+
+        end:
+          Math.min(
+            item.end,
+            DAY_END
+          )
+
+      })
+    );
+
+
+  assignments =
+    mergeContinuous(
+      assignments
+    );
 
 
   const laneData =
-    assignLanes(assignments);
+    assignLanes(
+      assignments
+    );
 
 
-  laneData.items.forEach(item => {
-
-    const block =
-      document.createElement("div");
+  laneData.items.forEach(
+    item => {
 
 
-    block.className =
-      "staff-block " +
-      colorClass;
+      const block =
+        document.createElement(
+          "div"
+        );
 
 
-    const top =
-      (
-        (item.start - DAY_START) /
-        DAY_LENGTH *
-        100
+      block.className =
+        "staff-block " +
+        colorClass;
+
+
+      const top =
+        (
+          (item.start -
+           DAY_START) /
+
+          DAY_LENGTH *
+
+          100
+        );
+
+
+      const height =
+        (
+          (item.end -
+           item.start) /
+
+          DAY_LENGTH *
+
+          100
+        );
+
+
+      const laneWidth =
+        100 /
+        laneData.laneCount;
+
+
+      block.style.left =
+
+        "calc(" +
+
+        (
+          item.lane *
+          laneWidth
+        ) +
+
+        "% + 2px)";
+
+
+      block.style.width =
+
+        "calc(" +
+
+        laneWidth +
+
+        "% - 4px)";
+
+
+      block.style.top =
+
+        "calc(" +
+
+        top +
+
+        "% + 2px)";
+
+
+      block.style.height =
+
+        "calc(" +
+
+        height +
+
+        "% - 4px)";
+
+
+      block.innerHTML =
+
+        '<span class="staff-name">' +
+
+        item.staff +
+
+        "</span>" +
+
+        '<span class="staff-time">' +
+
+        minutesToLabel(
+          item.start
+        ) +
+
+        "–" +
+
+        minutesToLabel(
+          item.end
+        ) +
+
+        "</span>";
+
+
+      track.appendChild(
+        block
       );
 
-
-    const height =
-      (
-        (item.end - item.start) /
-        DAY_LENGTH *
-        100
-      );
-
-
-    const laneWidth =
-      100 / laneData.laneCount;
-
-
-    block.style.left =
-      "calc(" +
-      (item.lane * laneWidth) +
-      "% + 2px)";
-
-
-    block.style.width =
-      "calc(" +
-      laneWidth +
-      "% - 4px)";
-
-
-    block.style.top =
-      "calc(" +
-      top +
-      "% + 2px)";
-
-
-    block.style.height =
-      "calc(" +
-      height +
-      "% - 4px)";
-
-
-    block.innerHTML =
-
-      '<span class="staff-name">' +
-      item.staff +
-      "</span>" +
-
-      '<span class="staff-time">' +
-      minutesToLabel(item.start) +
-      "–" +
-      minutesToLabel(item.end) +
-      "</span>";
-
-
-    track.appendChild(block);
-
-  });
+    }
+  );
 
 
   return track;
@@ -1270,7 +1793,10 @@ function renderPrimary(day) {
 
 
   const layout =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   layout.className =
     "timeline-layout primary-layout";
@@ -1278,72 +1804,105 @@ function renderPrimary(day) {
 
   const headers = [
 
-    ["Activity","activity-header"],
+    [
+      "Activity",
+      "activity-header"
+    ],
 
-    ["Spruce","room-header spruce-header"],
+    [
+      "Spruce",
+      "room-header spruce-header"
+    ],
 
-    ["Birch","room-header birch-header"],
+    [
+      "Birch",
+      "room-header birch-header"
+    ],
 
-    ["Maple","room-header maple-header"]
+    [
+      "Maple",
+      "room-header maple-header"
+    ]
 
   ];
 
 
-  headers.forEach(header => {
-
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "timeline-header " +
-      header[1];
-
-    div.textContent =
-      header[0];
-
-    layout.appendChild(div);
-
-  });
+  headers.forEach(
+    header => {
 
 
-  layout.appendChild(
-    makeActivityTrack(
-      primaryActivities
-    )
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+
+        "timeline-header " +
+        header[1];
+
+
+      div.textContent =
+        header[0];
+
+
+      layout.appendChild(
+        div
+      );
+
+    }
   );
 
 
   layout.appendChild(
+
+    makeActivityTrack(
+      primaryActivities
+    )
+
+  );
+
+
+  layout.appendChild(
+
     makeRoomTrack(
       "Spruce",
       day,
       primaryActivities,
       "spruce-block"
     )
+
   );
 
 
   layout.appendChild(
+
     makeRoomTrack(
       "Birch",
       day,
       primaryActivities,
       "birch-block"
     )
+
   );
 
 
   layout.appendChild(
+
     makeRoomTrack(
       "Maple",
       day,
       primaryActivities,
       "maple-block"
     )
+
   );
 
 
-  content.appendChild(layout);
+  content.appendChild(
+    layout
+  );
 
 }
 
@@ -1364,27 +1923,38 @@ function renderSeedlings(day) {
 
 
   const layout =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   layout.className =
     "timeline-layout seedlings-layout";
 
 
   const activityHeader =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   activityHeader.className =
     "timeline-header activity-header";
+
 
   activityHeader.textContent =
     "Activity";
 
 
   const roomHeader =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   roomHeader.className =
     "timeline-header room-header seedlings-header";
+
 
   roomHeader.textContent =
     "Seedlings";
@@ -1394,35 +1964,42 @@ function renderSeedlings(day) {
     activityHeader
   );
 
+
   layout.appendChild(
     roomHeader
   );
 
 
   layout.appendChild(
+
     makeActivityTrack(
       seedlingsActivities
     )
+
   );
 
 
   layout.appendChild(
+
     makeRoomTrack(
       "Seedlings",
       day,
       seedlingsActivities,
       "seedlings-block"
     )
+
   );
 
 
-  content.appendChild(layout);
+  content.appendChild(
+    layout
+  );
 
 }
 
 
 /* =========================================================
-   CARE BOX
+   CARE BOXES
 ========================================================= */
 
 function renderCare(
@@ -1445,7 +2022,9 @@ function renderCare(
 
 
   items =
-    mergeContinuous(items);
+    mergeContinuous(
+      items
+    );
 
 
   if (!items.length) {
@@ -1459,29 +2038,106 @@ function renderCare(
 
 
   element.innerHTML =
-    items.map(item => {
 
-      return (
+    items.map(
+      item => {
 
-        '<span class="care-person">' +
+        return (
 
-        item.staff +
+          '<span class="care-person">' +
 
-        '<span class="care-time">' +
+          item.staff +
 
-        minutesToLabel(item.start) +
+          '<span class="care-time">' +
 
-        "–" +
+          minutesToLabel(
+            item.start
+          ) +
 
-        minutesToLabel(item.end) +
+          "–" +
 
-        "</span>" +
+          minutesToLabel(
+            item.end
+          ) +
 
-        "</span>"
+          "</span>" +
 
-      );
+          "</span>"
 
-    }).join("");
+        );
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================================================
+   GATHER 4:30 AFTER CARE
+========================================================= */
+
+function renderGathering(day) {
+
+  const element =
+    document.getElementById(
+      "primary-430-gather"
+    );
+
+
+  let items =
+    getAssignments(
+      "Gather 4:30 After Care",
+      day
+    );
+
+
+  items =
+    mergeContinuous(
+      items
+    );
+
+
+  if (!items.length) {
+
+    element.innerHTML =
+      '<span style="color:#888">—</span>';
+
+    return;
+
+  }
+
+
+  element.innerHTML =
+
+    items.map(
+      item => {
+
+        return (
+
+          '<span class="care-person">' +
+
+          item.staff +
+
+          '<span class="care-time">' +
+
+          minutesToLabel(
+            item.start
+          ) +
+
+          "–" +
+
+          minutesToLabel(
+            item.end
+          ) +
+
+          "</span>" +
+
+          "</span>"
+
+        );
+
+      }
+    ).join("");
 
 }
 
@@ -1502,27 +2158,43 @@ function renderDuties(day) {
 
 
   const table =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   table.className =
     "duties-table";
 
 
-  ["Time","Duty","Staff"]
-    .forEach(label => {
+  [
+    "Time",
+    "Duty",
+    "Staff"
+  ].forEach(
+    label => {
+
 
       const header =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       header.className =
         "duty-header";
 
+
       header.textContent =
         label;
 
-      table.appendChild(header);
 
-    });
+      table.appendChild(
+        header
+      );
+
+    }
+  );
 
 
   let duties = [];
@@ -1531,82 +2203,98 @@ function renderDuties(day) {
   [
     "Rest Transition",
     "3rd Year"
-  ].forEach(assignment => {
+  ].forEach(
+    assignment => {
 
-    const items =
-      getAssignments(
-        assignment,
-        day
+
+      const items =
+        getAssignments(
+          assignment,
+          day
+        );
+
+
+      items.forEach(
+        item => {
+
+
+          duties.push({
+
+            assignment:
+              assignment,
+
+            staff:
+              item.staff,
+
+            start:
+              item.start,
+
+            end:
+              item.end
+
+          });
+
+        }
       );
 
-
-    items.forEach(item => {
-
-      duties.push({
-
-        assignment,
-
-        staff:item.staff,
-
-        start:item.start,
-
-        end:item.end
-
-      });
-
-    });
-
-  });
+    }
+  );
 
 
   /*
-  Group people doing the same duty
-  at the same time.
+  Group staff doing the exact
+  same duty at the same time.
   */
 
   const grouped = {};
 
 
-  duties.forEach(item => {
-
-    const key =
-
-      item.assignment +
-      "|" +
-      item.start +
-      "|" +
-      item.end;
+  duties.forEach(
+    item => {
 
 
-    if (!grouped[key]) {
+      const key =
 
-      grouped[key] = {
+        item.assignment +
+        "|" +
+        item.start +
+        "|" +
+        item.end;
 
-        assignment:
-          item.assignment,
 
-        start:
-          item.start,
+      if (!grouped[key]) {
 
-        end:
-          item.end,
+        grouped[key] = {
 
-        staff:[]
+          assignment:
+            item.assignment,
 
-      };
+          start:
+            item.start,
+
+          end:
+            item.end,
+
+          staff:[]
+
+        };
+
+      }
+
+
+      grouped[key]
+        .staff
+        .push(
+          item.staff
+        );
 
     }
-
-
-    grouped[key].staff.push(
-      item.staff
-    );
-
-  });
+  );
 
 
   const rows =
-    Object.values(grouped)
+    Object
+      .values(grouped)
       .sort(
         (a,b) =>
           a.start - b.start
@@ -1616,68 +2304,113 @@ function renderDuties(day) {
   if (!rows.length) {
 
     const empty =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     empty.className =
       "empty-message";
 
+
     empty.textContent =
       "No additional duties scheduled.";
 
-    table.appendChild(empty);
+
+    table.appendChild(
+      empty
+    );
 
   }
 
 
-  rows.forEach(row => {
-
-    const time =
-      document.createElement("div");
-
-    time.className =
-      "duty-cell";
-
-    time.textContent =
-      minutesToLabel(row.start) +
-      "–" +
-      minutesToLabel(row.end);
+  rows.forEach(
+    row => {
 
 
-    const duty =
-      document.createElement("div");
-
-    duty.className =
-      "duty-cell duty-name";
-
-    duty.textContent =
-      row.assignment;
+      const time =
+        document.createElement(
+          "div"
+        );
 
 
-    const staff =
-      document.createElement("div");
-
-    staff.className =
-      "duty-cell";
-
-    staff.textContent =
-      [...new Set(row.staff)]
-        .join(", ");
+      time.className =
+        "duty-cell";
 
 
-    table.appendChild(time);
-    table.appendChild(duty);
-    table.appendChild(staff);
+      time.textContent =
 
-  });
+        minutesToLabel(
+          row.start
+        ) +
+
+        "–" +
+
+        minutesToLabel(
+          row.end
+        );
 
 
-  content.appendChild(table);
+      const duty =
+        document.createElement(
+          "div"
+        );
+
+
+      duty.className =
+        "duty-cell duty-name";
+
+
+      duty.textContent =
+        row.assignment;
+
+
+      const staff =
+        document.createElement(
+          "div"
+        );
+
+
+      staff.className =
+        "duty-cell";
+
+
+      staff.textContent =
+
+        [
+          ...new Set(
+            row.staff
+          )
+        ].join(", ");
+
+
+      table.appendChild(
+        time
+      );
+
+
+      table.appendChild(
+        duty
+      );
+
+
+      table.appendChild(
+        staff
+      );
+
+    }
+  );
+
+
+  content.appendChild(
+    table
+  );
 
 }
 
 
 /* =========================================================
-   RENDER EVERYTHING
+   RENDER WHOLE PAGE
 ========================================================= */
 
 function renderAll() {
@@ -1688,10 +2421,19 @@ function renderAll() {
       .value;
 
 
-  renderPrimary(day);
+  /* School day */
 
-  renderSeedlings(day);
+  renderPrimary(
+    day
+  );
 
+
+  renderSeedlings(
+    day
+  );
+
+
+  /* Early Care */
 
   renderCare(
     "primary-early",
@@ -1706,6 +2448,8 @@ function renderAll() {
     day
   );
 
+
+  /* After Care */
 
   renderCare(
     "primary-430",
@@ -1735,13 +2479,65 @@ function renderAll() {
   );
 
 
-  renderDuties(day);
+  /* Gathering */
+
+  renderGathering(
+    day
+  );
+
+
+  /* Other Duties */
+
+  renderDuties(
+    day
+  );
 
 }
 
 
 /* =========================================================
-   LOAD
+   AUTOMATIC DEFAULT DAY
+
+   Monday-Friday:
+   Opens to today's actual day.
+
+   Saturday/Sunday:
+   Opens to Monday.
+========================================================= */
+
+function setDefaultDay() {
+
+  const today =
+    new Date()
+      .getDay();
+
+
+  const weekdays = {
+
+    1:"Monday",
+    2:"Tuesday",
+    3:"Wednesday",
+    4:"Thursday",
+    5:"Friday"
+
+  };
+
+
+  const defaultDay =
+    weekdays[today] ||
+    "Monday";
+
+
+  document
+    .getElementById("day")
+    .value =
+      defaultDay;
+
+}
+
+
+/* =========================================================
+   LOAD GOOGLE SHEET
 ========================================================= */
 
 async function loadSchedule() {
@@ -1749,7 +2545,9 @@ async function loadSchedule() {
   try {
 
     const response =
-      await fetch(CSV_URL);
+      await fetch(
+        CSV_URL
+      );
 
 
     if (!response.ok) {
@@ -1766,16 +2564,21 @@ async function loadSchedule() {
 
 
     scheduleData =
-      parseCSV(text);
+      parseCSV(
+        text
+      );
 
 
     renderAll();
 
   }
 
+
   catch(error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
     document
@@ -1785,12 +2588,21 @@ async function loadSchedule() {
       .innerHTML =
 
       '<div class="status error">' +
+
       "Schedule could not be loaded." +
+
       "</div>";
 
   }
 
 }
+
+
+/* =========================================================
+   START
+========================================================= */
+
+setDefaultDay();
 
 
 document
